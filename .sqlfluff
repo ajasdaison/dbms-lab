@@ -1,0 +1,22 @@
+[sqlfluff]
+# Pull in MySQL-specific rules and parsing
+dialect = mysql
+
+# Use Jinja templater (unless you're using dbt or raw SQL)
+templater = jinja
+
+# Exclude rules that are often controversial in new projects
+# For example, ambiguous.column_count (AM04) and structure.column_order (ST06)
+exclude_rules = ambiguous.column_count, structure.column_order
+
+# Set maximum line length to a reasonable width (e.g., 120 cols for readability)
+max_line_length = 120
+
+# Speed up linting by using all available CPUs
+processes = -1
+
+[sqlfluff:rules:aliasing.table]
+aliasing = explicit
+
+[sqlfluff:rules:aliasing.column]
+aliasing = explicit
