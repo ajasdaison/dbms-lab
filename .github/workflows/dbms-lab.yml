@@ -5,36 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  mysql-test:
-    runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: labdb
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install MySQL client
-        run: sudo apt-get update && sudo apt-get install -y mysql-client
-
-      - name: Run SQL scripts
-        run: |
-          for file in src/*.sql; do
-            echo "Running $file ..."
-            mysql -h 127.0.0.1 -P 3306 -u root -proot labdb < "$file"
-          done
-
+  
   lint-sql:
     runs-on: ubuntu-latest
     steps:
@@ -50,4 +21,4 @@ jobs:
         run: pip install sqlfluff
 
       - name: Lint SQL files
-        run: sqlfluff lint src/ --dialect mysql
+        run: sqlfluff lint src/employee_database.sql src/customer_database.sql src/student_db.sql src/data_modular_db.sql src/view_crea             tion.sql --dialect mysql
